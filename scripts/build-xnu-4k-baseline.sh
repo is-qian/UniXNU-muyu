@@ -102,6 +102,10 @@ if ! grep -q 'muyu_last_log_stub' "$UKE_BSD_INIT"; then
 /* muyu_last_log_stub: see scripts/build-xnu-4k-baseline.sh. */
 __attribute__((weak)) void muyu_panic_with_log(void) {}
 __attribute__((weak)) void muyu_dump_start_late(void) {}
+/* The legacy display probe also calls into the boot-log and thermal
+ * archives; on a cold tree those are built only after the first link. */
+__attribute__((weak)) void boot_log_tick(void) {}
+__attribute__((weak)) void muyu_thermal_probe(void) {}
 MUYU_LAST_LOG_STUB
 fi
 export XNU_AVAILABILITY_PL=$ROOT/.cache/fakeroot/usr/local/libexec/availability.pl
