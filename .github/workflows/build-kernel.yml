@@ -98,6 +98,8 @@ jobs:
           git -C UniXNU/drivers/RamBlock checkout -q 4be2d7eb05ef5a98126c91e0302c149140c0e3e1
           git clone -q https://github.com/UniXNU/QcomGeniSpi.git UniXNU/drivers/QcomGeniSpi
           git -C UniXNU/drivers/QcomGeniSpi checkout -q eac47baefe6a5d2368a70351e6ad1b6361bedbe2
+          git clone -q https://github.com/UniXNU/ArmSmmu4K.git UniXNU/kits/ArmSmmu4K
+          git -C UniXNU/kits/ArmSmmu4K checkout -q 83969cd874503e65997ff7639f7dcf3d0a92cd17
 
       - name: Restore the Homebrew downloads
         uses: actions/cache@v4
@@ -279,6 +281,8 @@ jobs:
           git -C UniXNU/drivers/RamBlock checkout -q 4be2d7eb05ef5a98126c91e0302c149140c0e3e1
           git clone -q https://github.com/UniXNU/QcomGeniSpi.git UniXNU/drivers/QcomGeniSpi
           git -C UniXNU/drivers/QcomGeniSpi checkout -q eac47baefe6a5d2368a70351e6ad1b6361bedbe2
+          git clone -q https://github.com/UniXNU/ArmSmmu4K.git UniXNU/kits/ArmSmmu4K
+          git -C UniXNU/kits/ArmSmmu4K checkout -q 83969cd874503e65997ff7639f7dcf3d0a92cd17
 
       - name: Restore the Homebrew downloads
         uses: actions/cache@v4
