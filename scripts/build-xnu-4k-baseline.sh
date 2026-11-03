@@ -655,7 +655,8 @@ if [ "${XNU_SOURCE_CORECRYPTO14:-0}" = 1 ]; then
     KERNEL_ARCHIVE_DEPENDENCIES="$KERNEL_ARCHIVE_DEPENDENCIES $ARMCPU_ARCHIVE"
   fi
   if [ "${XNU_NATIVE_UFS:-0}" = 1 ]; then
-    UFS_ARCHIVE=$ROOT/build/native-ufs/libNativeUfs.a
+    UFS_ARCHIVE=$ROOT/build/native-ufs/libShengUfs.a
+    [ -f "$UFS_ARCHIVE" ] || UFS_ARCHIVE=$ROOT/build/native-ufs/libNativeUfs.a
     test -f "$UFS_ARCHIVE"
     KERNEL_EXTRA_ARCHIVES="$KERNEL_EXTRA_ARCHIVES -Wl,-force_load,$UFS_ARCHIVE"
     KERNEL_ARCHIVE_DEPENDENCIES="$KERNEL_ARCHIVE_DEPENDENCIES $UFS_ARCHIVE"
@@ -735,7 +736,8 @@ PY_GPU_BROKER
     KERNEL_ARCHIVE_DEPENDENCIES="$KERNEL_ARCHIVE_DEPENDENCIES $CONSOLE_ARCHIVE"
   fi
   if [ "$NATIVE_RAM_BLOCK" = 1 ]; then
-    RAM_BLOCK_ARCHIVE=$ROOT/build/native-ram-block/libNativeRamBlock.a
+    RAM_BLOCK_ARCHIVE=$ROOT/build/native-ram-block/libRamBlock.a
+    [ -f "$RAM_BLOCK_ARCHIVE" ] || RAM_BLOCK_ARCHIVE=$ROOT/build/native-ram-block/libNativeRamBlock.a
     test -f "$RAM_BLOCK_ARCHIVE"
     if [ "${XNU_NATIVE_VIRTIO_BLOCK:-0}" = 1 ]; then
       # Both transports import the same original class. Keep one exact alias
