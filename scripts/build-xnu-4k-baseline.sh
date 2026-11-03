@@ -91,6 +91,19 @@ __attribute__((weak)) void native_legacy_display_probe(void)
 }
 UKE_DISPLAY_STUB
 fi
+# The last-panic print and crit-exit patches call muyu_panic_with_log() and
+# muyu_dump_start_late() unconditionally, but libBravearkLastLog.a is built only
+# after the bootstrap pass (it reads this pass's compile records), so a cold
+# tree cannot resolve the two symbols yet. Weak stubs keep the bootstrap link
+# whole; the force-loaded archive overrides both in the shipping build.
+if ! grep -q 'muyu_last_log_stub' "$UKE_BSD_INIT"; then
+  cat >> "$UKE_BSD_INIT" <<'MUYU_LAST_LOG_STUB'
+
+/* muyu_last_log_stub: see scripts/build-xnu-4k-baseline.sh. */
+__attribute__((weak)) void muyu_panic_with_log(void) {}
+__attribute__((weak)) void muyu_dump_start_late(void) {}
+MUYU_LAST_LOG_STUB
+fi
 export XNU_AVAILABILITY_PL=$ROOT/.cache/fakeroot/usr/local/libexec/availability.pl
 python3 scripts/prepare-xnu-source.py
 BOOT_PROGRESS=${XNU_BOOT_PROGRESS:-0}
