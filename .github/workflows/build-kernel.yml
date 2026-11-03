@@ -49,6 +49,9 @@ env:
   # cache and start from a clean tree; no restore-key may fall back to a
   # different patch state.
   CACHE_SCHEMA: v6
+  # Anonymous GitHub API calls hit 403 on shared runner IPs; the workflow
+  # token gives prepare-xnu-source.py its 5k/hr quota.
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   HOMEBREW_NO_AUTO_UPDATE: 1
   HOMEBREW_NO_INSTALL_CLEANUP: 1
 
@@ -173,7 +176,7 @@ jobs:
       - name: Build and prelink the first-console kernel
         working-directory: UniXNU
         run: |
-          ./unixnu defconfig braveark_defconfig -D ../UniXNU-braveark
+          ./unixnu defconfig muyu_defconfig -D ../UniXNU-braveark
           ./unixnu build kernel -D ../UniXNU-braveark
 
       - name: Record the result
