@@ -78,6 +78,14 @@ jobs:
         working-directory: UniXNU
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
+      - name: Check out the XnuPrelink kit
+        # board.toml's prelink tool is kits/XnuPrelink/emit_prelink.py; the uke
+        # branch still carries it under the NativePrelink name. Pin the commit
+        # the upstream main branch references.
+        run: |
+          git clone -q https://github.com/UniXNU/XnuPrelink.git UniXNU/kits/XnuPrelink
+          git -C UniXNU/kits/XnuPrelink checkout -q b1888c12456c46a2226d63c794465dfcee08d465
+
       - name: Restore the Homebrew downloads
         uses: actions/cache@v4
         with:
@@ -237,6 +245,14 @@ jobs:
         id: base
         working-directory: UniXNU
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Check out the XnuPrelink kit
+        # board.toml's prelink tool is kits/XnuPrelink/emit_prelink.py; the uke
+        # branch still carries it under the NativePrelink name. Pin the commit
+        # the upstream main branch references.
+        run: |
+          git clone -q https://github.com/UniXNU/XnuPrelink.git UniXNU/kits/XnuPrelink
+          git -C UniXNU/kits/XnuPrelink checkout -q b1888c12456c46a2226d63c794465dfcee08d465
 
       - name: Restore the Homebrew downloads
         uses: actions/cache@v4
