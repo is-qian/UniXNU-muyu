@@ -98,6 +98,10 @@ jobs:
           git -C UniXNU/drivers/RamBlock checkout -q 4be2d7eb05ef5a98126c91e0302c149140c0e3e1
           git clone -q https://github.com/UniXNU/QcomGeniSpi.git UniXNU/drivers/QcomGeniSpi
           git -C UniXNU/drivers/QcomGeniSpi checkout -q eac47baefe6a5d2368a70351e6ad1b6361bedbe2
+          git clone -q https://github.com/UniXNU/AppleKeyStoreState.git UniXNU/drivers/AppleKeyStoreState
+          git -C UniXNU/drivers/AppleKeyStoreState checkout -q 42ff83e08b2265fe741d4adaf084bebe003452ba
+          git clone -q https://github.com/UniXNU/GopFramebuffer.git UniXNU/drivers/GopFramebuffer
+          git -C UniXNU/drivers/GopFramebuffer checkout -q 4cc8cb33f86baf4903c89f01a33872fb769d2457
           # These four are uke submodules; pin them and stop the driver's
           # `git submodule update` from resetting them to uke's older pins.
           for k in ArmSmmu4K AdrenoFirmware AdrenoPM4 AirNir; do
@@ -294,6 +298,10 @@ jobs:
           git -C UniXNU/drivers/RamBlock checkout -q 4be2d7eb05ef5a98126c91e0302c149140c0e3e1
           git clone -q https://github.com/UniXNU/QcomGeniSpi.git UniXNU/drivers/QcomGeniSpi
           git -C UniXNU/drivers/QcomGeniSpi checkout -q eac47baefe6a5d2368a70351e6ad1b6361bedbe2
+          git clone -q https://github.com/UniXNU/AppleKeyStoreState.git UniXNU/drivers/AppleKeyStoreState
+          git -C UniXNU/drivers/AppleKeyStoreState checkout -q 42ff83e08b2265fe741d4adaf084bebe003452ba
+          git clone -q https://github.com/UniXNU/GopFramebuffer.git UniXNU/drivers/GopFramebuffer
+          git -C UniXNU/drivers/GopFramebuffer checkout -q 4cc8cb33f86baf4903c89f01a33872fb769d2457
           # These four are uke submodules; pin them and stop the driver's
           # `git submodule update` from resetting them to uke's older pins.
           for k in ArmSmmu4K AdrenoFirmware AdrenoPM4 AirNir; do
