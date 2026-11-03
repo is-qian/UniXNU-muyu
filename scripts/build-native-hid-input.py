@@ -75,6 +75,9 @@ for i in range(168,207):
 header+='};\nstatic_assert(sizeof(IOHIDDevice)==0xd0,"Original device instance size");\n'
 (OUT/'OriginalHidDeviceABI.h').write_text(header)
 print(run(['python3',ROOT/'scripts/build-arm-driver.py','ShengHidInput'],text=True),end='')
+# muyu: build-arm-driver names the object after the component (ShengHidInput.o)
+if not (OUT/'NativeHidInput.o').is_file() and (OUT/'ShengHidInput.o').is_file():
+    (OUT/'NativeHidInput.o').write_bytes((OUT/'ShengHidInput.o').read_bytes())
 obj=OUT/'NativeHidInput.o';raw=obj.read_bytes();om=macho(raw)
 st=next(p for c,p,_ in om['commands'] if c==2);sy,count,strings,_=struct.unpack_from('<4I',raw,st+8);symbols=[]
 for i in range(count):
