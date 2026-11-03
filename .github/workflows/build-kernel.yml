@@ -66,6 +66,10 @@ jobs:
         with:
           path: UniXNU-braveark
 
+      - name: Materialize the fw/ harvest inputs at the workspace root
+        # build-native-legacy-display.py reads fw/... next to the checkouts
+        run: cp -r UniXNU-braveark/fw ./fw
+
       - name: Check out UniXNU
         uses: actions/checkout@v4
         with:
@@ -239,6 +243,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: UniXNU-braveark
+
+      - name: Materialize the fw/ harvest inputs at the workspace root
+        # build-native-legacy-display.py reads fw/... next to the checkouts
+        run: cp -r UniXNU-braveark/fw ./fw
 
       - name: Check out UniXNU
         uses: actions/checkout@v4
