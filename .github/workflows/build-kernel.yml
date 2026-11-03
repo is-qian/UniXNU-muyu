@@ -141,28 +141,28 @@ jobs:
         run: |
           ./unixnu defconfig bootstrap_defconfig -D ../UniXNU-braveark
           ./unixnu build kernel -D ../UniXNU-braveark
-          test -f out/braveark/kernel/kernel.macho
-          test -f out/braveark/kernel/kernel.json
-          mkdir -p out/braveark/tree/build/native-prelink
-          cp out/braveark/kernel/kernel.macho \
-             out/braveark/tree/build/native-prelink/native-owner-mobile-graphics-candidate.macho
-          cp out/braveark/kernel/kernel.json \
-             out/braveark/tree/build/native-prelink/native-owner-mobile-graphics-candidate.json
-          cp out/braveark/kernel/kernel.macho \
-             out/braveark/tree/build/native-prelink/native-owner-ufs-cpu-desktop-v9-hid-init-candidate.macho
-          cp out/braveark/kernel/kernel.json \
-             out/braveark/tree/build/native-prelink/native-owner-ufs-cpu-desktop-v9-hid-init-candidate.json
+          test -f out/muyu/kernel/kernel.macho
+          test -f out/muyu/kernel/kernel.json
+          mkdir -p out/muyu/tree/build/native-prelink
+          cp out/muyu/kernel/kernel.macho \
+             out/muyu/tree/build/native-prelink/native-owner-mobile-graphics-candidate.macho
+          cp out/muyu/kernel/kernel.json \
+             out/muyu/tree/build/native-prelink/native-owner-mobile-graphics-candidate.json
+          cp out/muyu/kernel/kernel.macho \
+             out/muyu/tree/build/native-prelink/native-owner-ufs-cpu-desktop-v9-hid-init-candidate.macho
+          cp out/muyu/kernel/kernel.json \
+             out/muyu/tree/build/native-prelink/native-owner-ufs-cpu-desktop-v9-hid-init-candidate.json
           # Do not leave the bootstrap kernel where the result step would
           # upload it as the shipping kernel.
-          rm -f out/braveark/kernel/kernel.macho out/braveark/kernel/kernel.json
-          ls -l out/braveark/tree/build/native-prelink/
+          rm -f out/muyu/kernel/kernel.macho out/muyu/kernel/kernel.json
+          ls -l out/muyu/tree/build/native-prelink/
 
       - name: Build the first-console archives
         working-directory: UniXNU
         # The first-console configuration does not opt in to the board archive
         # list, so its archives are built here explicitly.
         run: |
-          workspace=out/braveark/tree
+          workspace=out/muyu/tree
           ( cd "$workspace" && python3 scripts/gen-touch-firmware.py )
           ( cd "$workspace" && python3 scripts/build-corecrypto-14.py )
           ( cd "$workspace" && python3 scripts/build-corecrypto-14.py --namespace )
@@ -172,7 +172,7 @@ jobs:
           python3 - <<'PY'
           import json
           from pathlib import Path
-          p = Path('out/braveark/tree/build/display-analysis/mobile-graphics-legacy-abi.json')
+          p = Path('out/muyu/tree/build/display-analysis/mobile-graphics-legacy-abi.json')
           if not p.exists():
               p.write_text(json.dumps({'runtime_metadata_checkpoint_sha256': '3044c2beff552911605994c0dc7aa73182066cbb5aed0b396999ceeb5a96da2b'}) + '\n')
           PY
@@ -192,14 +192,14 @@ jobs:
         if: always()
         run: |
           mkdir -p ../artifacts
-          if [ -f out/braveark/kernel/kernel.macho ]; then
-            cp out/braveark/kernel/kernel.macho ../artifacts/
-            cp out/braveark/kernel/kernel.json ../artifacts/ 2>/dev/null || true
-            shasum -a 256 out/braveark/kernel/kernel.macho | tee ../artifacts/kernel.macho.sha256
+          if [ -f out/muyu/kernel/kernel.macho ]; then
+            cp out/muyu/kernel/kernel.macho ../artifacts/
+            cp out/muyu/kernel/kernel.json ../artifacts/ 2>/dev/null || true
+            shasum -a 256 out/muyu/kernel/kernel.macho | tee ../artifacts/kernel.macho.sha256
           else
             echo "kernel.macho was not produced" | tee ../artifacts/MISSING.txt
           fi
-          cp -r out/braveark/logs ../artifacts/logs 2>/dev/null || true
+          cp -r out/muyu/logs ../artifacts/logs 2>/dev/null || true
           ls -l ../artifacts
 
       - name: Encrypt the braveark-kernel artifact
@@ -302,19 +302,19 @@ jobs:
         run: |
           ./unixnu defconfig bootstrap_defconfig -D ../UniXNU-braveark
           ./unixnu build kernel -D ../UniXNU-braveark
-          test -f out/braveark/kernel/kernel.macho
-          test -f out/braveark/kernel/kernel.json
-          mkdir -p out/braveark/tree/build/native-prelink
-          cp out/braveark/kernel/kernel.macho \
-             out/braveark/tree/build/native-prelink/native-owner-mobile-graphics-candidate.macho
-          cp out/braveark/kernel/kernel.json \
-             out/braveark/tree/build/native-prelink/native-owner-mobile-graphics-candidate.json
-          cp out/braveark/kernel/kernel.macho \
-             out/braveark/tree/build/native-prelink/native-owner-ufs-cpu-desktop-v9-hid-init-candidate.macho
-          cp out/braveark/kernel/kernel.json \
-             out/braveark/tree/build/native-prelink/native-owner-ufs-cpu-desktop-v9-hid-init-candidate.json
-          rm -f out/braveark/kernel/kernel.macho out/braveark/kernel/kernel.json
-          ls -l out/braveark/tree/build/native-prelink/
+          test -f out/muyu/kernel/kernel.macho
+          test -f out/muyu/kernel/kernel.json
+          mkdir -p out/muyu/tree/build/native-prelink
+          cp out/muyu/kernel/kernel.macho \
+             out/muyu/tree/build/native-prelink/native-owner-mobile-graphics-candidate.macho
+          cp out/muyu/kernel/kernel.json \
+             out/muyu/tree/build/native-prelink/native-owner-mobile-graphics-candidate.json
+          cp out/muyu/kernel/kernel.macho \
+             out/muyu/tree/build/native-prelink/native-owner-ufs-cpu-desktop-v9-hid-init-candidate.macho
+          cp out/muyu/kernel/kernel.json \
+             out/muyu/tree/build/native-prelink/native-owner-ufs-cpu-desktop-v9-hid-init-candidate.json
+          rm -f out/muyu/kernel/kernel.macho out/muyu/kernel/kernel.json
+          ls -l out/muyu/tree/build/native-prelink/
 
       - name: Seed the display ABI observation cache
         working-directory: UniXNU
@@ -323,11 +323,11 @@ jobs:
         # pruned. The observation is of the unchanged iPad7,1 original class,
         # not of the native uke kernel; uke pins the same kernelcache as sheng.
         run: |
-          mkdir -p out/braveark/tree/build/display-analysis
+          mkdir -p out/muyu/tree/build/display-analysis
           python3 - <<'PY'
           import json
           from pathlib import Path
-          p = Path('out/braveark/tree/build/display-analysis/mobile-graphics-legacy-abi.json')
+          p = Path('out/muyu/tree/build/display-analysis/mobile-graphics-legacy-abi.json')
           if not p.exists():
               p.write_text(json.dumps({'runtime_metadata_checkpoint_sha256': '3044c2beff552911605994c0dc7aa73182066cbb5aed0b396999ceeb5a96da2b'}) + '\n')
           PY
@@ -335,7 +335,7 @@ jobs:
       - name: Stage the inputs the board archive list reads
         working-directory: UniXNU
         run: |
-          workspace=out/braveark/tree
+          workspace=out/muyu/tree
           ( cd "$workspace" && python3 scripts/gen-touch-firmware.py )
           mkdir -p "$workspace/.cache/firmware/kernelcache.macho"
           source=$(find out -name 'kernelcache.decompressed' -print -quit)
@@ -359,20 +359,20 @@ jobs:
         if: always()
         run: |
           mkdir -p ../artifacts-full
-          if [ -f out/braveark/kernel/kernel.macho ]; then
-            cp out/braveark/kernel/kernel.macho ../artifacts-full/
-            cp out/braveark/kernel/kernel.json ../artifacts-full/ 2>/dev/null || true
-            shasum -a 256 out/braveark/kernel/kernel.macho | tee ../artifacts-full/kernel.macho.sha256
+          if [ -f out/muyu/kernel/kernel.macho ]; then
+            cp out/muyu/kernel/kernel.macho ../artifacts-full/
+            cp out/muyu/kernel/kernel.json ../artifacts-full/ 2>/dev/null || true
+            shasum -a 256 out/muyu/kernel/kernel.macho | tee ../artifacts-full/kernel.macho.sha256
           else
             echo "kernel.macho was not produced" | tee ../artifacts-full/MISSING.txt
           fi
-          cp -r out/braveark/logs ../artifacts-full/logs 2>/dev/null || true
+          cp -r out/muyu/logs ../artifacts-full/logs 2>/dev/null || true
           for report in build/native-aes/bindings.json build/storage-abi/headers.json \
                         build/native-ufs/bindings.json build/native-ufs/compile.log \
                         build/native-legacy-display/build-report.json; do
-            if [ -f "out/braveark/tree/$report" ]; then
+            if [ -f "out/muyu/tree/$report" ]; then
               mkdir -p "../artifacts-full/$(dirname "$report")"
-              cp "out/braveark/tree/$report" "../artifacts-full/$report"
+              cp "out/muyu/tree/$report" "../artifacts-full/$report"
             fi
           done
           ls -l ../artifacts-full
