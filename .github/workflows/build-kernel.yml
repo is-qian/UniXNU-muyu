@@ -108,6 +108,7 @@ jobs:
           git -C UniXNU/kits/ArmSmmu4K checkout -q 83969cd874503e65997ff7639f7dcf3d0a92cd17
           git clone -q https://github.com/UniXNU/AdrenoFirmware.git UniXNU/kits/AdrenoFirmware
           git -C UniXNU/kits/AdrenoFirmware checkout -q 20ad3d7aca14bd46aecab6335c780f5413fa054b
+          git -C UniXNU/kits/AdrenoFirmware apply ../../../UniXNU-braveark/patches/adreno-firmware-dcvs-fields.patch
           git clone -q https://github.com/UniXNU/AdrenoPM4.git UniXNU/kits/AdrenoPM4
           git -C UniXNU/kits/AdrenoPM4 checkout -q 282606b528b2595bc4274ea7490b62b323f35a5f
           git clone -q https://github.com/UniXNU/AirNir.git UniXNU/kits/AirNir
@@ -303,6 +304,7 @@ jobs:
           git -C UniXNU/kits/ArmSmmu4K checkout -q 83969cd874503e65997ff7639f7dcf3d0a92cd17
           git clone -q https://github.com/UniXNU/AdrenoFirmware.git UniXNU/kits/AdrenoFirmware
           git -C UniXNU/kits/AdrenoFirmware checkout -q 20ad3d7aca14bd46aecab6335c780f5413fa054b
+          git -C UniXNU/kits/AdrenoFirmware apply ../../../UniXNU-braveark/patches/adreno-firmware-dcvs-fields.patch
           git clone -q https://github.com/UniXNU/AdrenoPM4.git UniXNU/kits/AdrenoPM4
           git -C UniXNU/kits/AdrenoPM4 checkout -q 282606b528b2595bc4274ea7490b62b323f35a5f
           git clone -q https://github.com/UniXNU/AirNir.git UniXNU/kits/AirNir
