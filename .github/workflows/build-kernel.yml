@@ -7,12 +7,12 @@ name: build-braveark-kernel
 #
 #   kernel  first-console kernel: corecrypto, ArmDTPlatform, ArmCpu, timer,
 #           PAN, DT panic region and the GOP legacy display.
-#   full    stage-6 kernel from configs/braveark-full_defconfig: everything the
+#   full    stage-6 kernel from configs/muyu-full_defconfig: everything the
 #           source-reproducible archive chain can supply, including NativeUfs
 #           and NativeAES, plus mockfs, pthread, PMGR and the legacy display.
 #           The hardware-qualification gates (storage ABI snapshots, verified
 #           root policy bundles, VirtIO/RamBlock, owner-root, boot progress)
-#           stay off; configs/braveark-full-plus_defconfig lists them.
+#           stay off; configs/muyu-full-plus_defconfig lists them.
 #
 # Runner note: the piano port proved that macos-14 / Xcode 15.4 is too old
 # (`-mach_msg2` is unknown and MIG has no SubSystem declaration). Use the
@@ -34,7 +34,7 @@ on:
       defconfig:
         description: 'Device defconfig to build'
         required: false
-        default: 'braveark-full_defconfig'
+        default: 'muyu-full_defconfig'
 
 concurrency:
   group: build-braveark-kernel-${{ github.ref }}
@@ -331,7 +331,7 @@ jobs:
           path: |
             UniXNU/out
             UniXNU-braveark/.cache
-          key: unixnu-full-${{ env.CACHE_SCHEMA }}-${{ steps.base.outputs.sha }}-${{ inputs.defconfig || 'braveark-full_defconfig' }}-${{ hashFiles('UniXNU-braveark/board.toml', 'UniXNU-braveark/feeds.toml', 'UniXNU-braveark/unixnu.lock', 'UniXNU-braveark/configs/**', 'UniXNU-braveark/scripts/**', 'UniXNU-braveark/patches/**', 'UniXNU-braveark/package/**', 'UniXNU-braveark/drivers/**', 'UniXNU-braveark/kits/**', 'UniXNU/patches/**', 'UniXNU-braveark/.github/workflows/build-kernel.yml') }}
+          key: unixnu-full-${{ env.CACHE_SCHEMA }}-${{ steps.base.outputs.sha }}-${{ inputs.defconfig || 'muyu-full_defconfig' }}-${{ hashFiles('UniXNU-braveark/board.toml', 'UniXNU-braveark/feeds.toml', 'UniXNU-braveark/unixnu.lock', 'UniXNU-braveark/configs/**', 'UniXNU-braveark/scripts/**', 'UniXNU-braveark/patches/**', 'UniXNU-braveark/package/**', 'UniXNU-braveark/drivers/**', 'UniXNU-braveark/kits/**', 'UniXNU/patches/**', 'UniXNU-braveark/.github/workflows/build-kernel.yml') }}
 
       - name: Report the runner toolchain
         run: |
@@ -414,7 +414,7 @@ jobs:
         # recorded original bindings, the public storage headers, the NativeUfs
         # bring-up transport, mockfs, PMGR, pthread and the legacy display.
         run: |
-          ./unixnu defconfig "${{ github.event.inputs.defconfig || 'braveark-full_defconfig' }}" -D ../UniXNU-braveark
+          ./unixnu defconfig "${{ github.event.inputs.defconfig || 'muyu-full_defconfig' }}" -D ../UniXNU-braveark
           ./unixnu status
           ./unixnu build kernel -D ../UniXNU-braveark
 
